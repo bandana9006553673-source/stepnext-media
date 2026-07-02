@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>StepNext Media — We Build Brands That Grow</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Manrope:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg: #0a0a0c;
+    --bg-alt: #131316;
+    --card: #17171b;
+    --line: #2a2a2f;
+    --orange: #ff7a1a;
+    --orange-deep: #e85d04;
+    --white: #f5f5f2;
+    --gray: #9a9aa2;
+    --gold: #ffb347;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--bg);
+    color:var(--white);
+    font-family:'Manrope',sans-serif;
+    overflow-x:hidden;
+  }
+  h1,h2,h3,.display{
+    font-family:'Archivo Black',sans-serif;
+    text-transform:uppercase;
+    letter-spacing:-0.01em;
+    line-height:1.02;
+  }
+  .mono{font-family:'JetBrains Mono',monospace;letter-spacing:0.08em;text-transform:uppercase;}
+  a{text-decoration:none;color:inherit;}
+  .wrap{max-width:1180px;margin:0 auto;padding:0 32px;}
+  img{max-width:100%;display:block;}
+
+  /* subtle background arrow grid */
+  .grain{
+    position:fixed;inset:0;pointer-events:none;z-index:1;opacity:0.04;
+    background-image:repeating-linear-gradient(45deg, #fff 0, #fff 1px, transparent 1px, transparent 14px);
+  }
+
+  /* ===== NAV ===== */
+  header{
+    position:sticky;top:0;z-index:100;
+    background:rgba(10,10,12,0.85);backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--line);
+  }
+  nav{
+    display:flex;align-items:center;justify-content:space-between;
+    padding:18px 32px;max-width:1180px;margin:0 auto;
+  }
+  .logo{display:flex;align-items:center;gap:10px;}
+  .logo-mark{
+    width:38px;height:38px;position:relative;
+  }
+  .logo-mark svg{width:100%;height:100%;}
+  .logo-text{font-family:'Archivo Black',sans-serif;font-size:18px;letter-spacing:0.02em;}
+  .logo-text span{color:var(--orange);}
+  .nav-links{display:flex;gap:34px;}
+  .nav-links a{
+    font-family:'JetBrains Mono',monospace;font-size:12.5px;text-transform:uppercase;letter-spacing:0.08em;
+    color:var(--gray);transition:color 0.2s;
+  }
+  .nav-links a:hover{color:var(--orange);}
+  .nav-cta{
+    background:var(--orange);color:#0a0a0c;padding:11px 22px;border-radius:2px;
+    font-family:'JetBrains Mono',monospace;font-weight:700;font-size:12.5px;letter-spacing:0.06em;text-transform:uppercase;
+    transition:background 0.2s;
+  }
+  .nav-cta:hover{background:var(--gold);}
+  .burger{display:none;background:none;border:none;color:var(--white);font-size:26px;cursor:pointer;}
+
+  /* ===== HERO ===== */
+  .hero{
+    position:relative;padding:110px 0 90px;overflow:hidden;
+    border-bottom:1px solid var(--line);
+  }
+  .hero-grid{
+    display:grid;grid-template-columns:1.1fr 0.9fr;gap:60px;align-items:center;
+  }
+  .eyebrow{
+    display:inline-flex;align-items:center;gap:10px;
+    font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:0.15em;text-transform:uppercase;
+    color:var(--orange);margin-bottom:22px;
+  }
+  .eyebrow::before{content:'';width:28px;height:1px;background:var(--orange);}
+  .hero h1{font-size:clamp(38px,5.2vw,66px);}
+  .hero h1 .accent{color:var(--orange);}
+  .hero p.sub{
+    margin-top:22px;color:var(--gray);font-size:17px;line-height:1.65;max-width:480px;
+  }
+  .hero-ctas{display:flex;gap:14px;margin-top:34px;flex-wrap:wrap;}
+  .btn-primary{
+    background:var(--orange);color:#0a0a0c;padding:16px 30px;border-radius:2px;
+    font-family:'JetBrains Mono',monospace;font-weight:700;font-size:13px;letter-spacing:0.06em;text-transform:uppercase;
+    display:inline-flex;align-items:center;gap:10px;transition:transform 0.2s, background 0.2s;
+  }
+  .btn-primary:hover{background:var(--gold);transform:translateY(-2px);}
+  .btn-ghost{
+    border:1px solid var(--line);color:var(--white);padding:16px 30px;border-radius:2px;
+    font-family:'JetBrains Mono',monospace;font-weight:600;font-size:13px;letter-spacing:0.06em;text-transform:uppercase;
+    transition:border-color 0.2s, color 0.2s;
+  }
+  .btn-ghost:hover{border-color:var(--orange);color:var(--orange);}
+
+  .hero-visual{position:relative;height:420px;}
+  .chart-svg{width:100%;height:100%;}
+  .chart-line{
+    fill:none;stroke:var(--orange);stroke-width:3;
+    stroke-dasharray:900;stroke-dashoffset:900;
+    animation:draw 2.2s ease-out forwards 0.4s;
+  }
+  .chart-fill{opacity:0;animation:fadein 1.2s ease-out forwards 1.6s;}
+  @keyframes draw{to{stroke-dashoffset:0;}}
+  @keyframes fadein{to{opacity:1;}}
+  .chart-dot{
+    fill:var(--gold);opacity:0;
+    animation:popin 0.5s ease-out forwards;
+  }
+  .chart-dot.d1{animation-delay:1.9s;}
+  .chart-dot.d2{animation-delay:2.05s;}
+  .chart-dot.d3{animation-delay:2.2s;}
+  @keyframes popin{from{opacity:0;transform:scale(0);}to{opacity:1;transform:scale(1);}}
+  .chart-label{
+    position:absolute;font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--gray);letter-spacing:0.06em;
+  }
+  .stat-callout{
+    position:absolute;top:8px;right:0;background:var(--card);border:1px solid var(--line);
+    padding:14px 18px;border-radius:3px;opacity:0;animation:fadein 0.6s ease-out forwards 2.4s;
+  }
+  .stat-callout .num{font-family:'Archivo Black',sans-serif;font-size:26px;color:var(--orange);}
+  .stat-callout .lbl{font-family:'JetBrains Mono',monospace;font-size:10.5px;color:var(--gray);letter-spacing:0.06em;text-transform:uppercase;}
+
+  .pillars{display:flex;gap:0;margin-top:56px;border-top:1px solid var(--line);padding-top:26px;flex-wrap:wrap;}
+  .pillar{display:flex;align-items:center;gap:10px;padding-right:34px;color:var(--gray);font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:0.05em;text-transform:uppercase;}
+  .pillar svg{width:16px;height:16px;stroke:var(--orange);flex-shrink:0;}
+
+  /* ===== SECTION HEADS ===== */
+  .section{padding:100px 0;border-bottom:1px solid var(--line);}
+  .section-head{margin-bottom:56px;max-width:640px;}
+  .section-head .eyebrow{margin-bottom:16px;}
+  .section-head h2{font-size:clamp(30px,3.6vw,44px);}
+  .section-head p{color:var(--gray);margin-top:16px;font-size:16px;line-height:1.6;}
+
+  /* ===== SERVICES ===== */
+  .svc-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line);border:1px solid var(--line);}
+  .svc-card{
+    background:var(--bg);padding:32px 26px;transition:background 0.25s;position:relative;
+  }
+  .svc-card:hover{background:var(--bg-alt);}
+  .svc-card:hover .svc-icon{border-color:var(--orange);color:var(--orange);}
+  .svc-icon{
+    width:44px;height:44px;border:1px solid var(--line);border-radius:50%;
+    display:flex;align-items:center;justify-content:center;margin-bottom:20px;
+    color:var(--gray);transition:all 0.25s;
+  }
+  .svc-icon svg{width:20px;height:20px;}
+  .svc-card h3{font-family:'Manrope',sans-serif;font-weight:800;font-size:16px;text-transform:none;letter-spacing:0;margin-bottom:10px;}
+  .svc-card p{color:var(--gray);font-size:13.5px;line-height:1.55;}
+  .svc-num{
+    position:absolute;top:28px;right:26px;font-family:'JetBrains Mono',monospace;font-size:11px;color:#3a3a40;
+  }
+
+  /* ===== VIDEO FEATURE ===== */
+  .video-feature{
+    display:grid;grid-template-columns:1fr 1fr;gap:0;border:1px solid var(--line);overflow:hidden;
+  }
+  .video-copy{padding:56px;display:flex;flex-direction:column;justify-content:center;background:var(--bg-alt);}
+  .video-copy .eyebrow{margin-bottom:16px;}
+  .video-copy h3{font-size:clamp(24px,3vw,32px);margin-bottom:18px;}
+  .video-copy p{color:var(--gray);font-size:15.5px;line-height:1.65;margin-bottom:28px;}
+  .video-thumb{position:relative;min-height:340px;background:linear-gradient(135deg,#1a1a1e,#0d0d0f);display:flex;align-items:center;justify-content:center;}
+  .play-btn{
+    width:78px;height:78px;border-radius:50%;background:var(--orange);
+    display:flex;align-items:center;justify-content:center;cursor:pointer;transition:transform 0.25s;
+    box-shadow:0 0 0 0 rgba(255,122,26,0.5);
+  }
+  .play-btn:hover{transform:scale(1.08);}
+  .play-btn svg{width:26px;height:26px;margin-left:4px;fill:#0a0a0c;}
+
+  /* ===== WHY US STRIP ===== */
+  .why-strip{
+    display:grid;grid-template-columns:repeat(6,1fr);border-top:1px solid var(--line);
+  }
+  .why-item{
+    padding:34px 20px;text-align:center;border-right:1px solid var(--line);
+  }
+  .why-item:last-child{border-right:none;}
+  .why-item svg{width:26px;height:26px;stroke:var(--orange);margin-bottom:14px;}
+  .why-item p{font-family:'JetBrains Mono',monospace;font-size:11.5px;letter-spacing:0.05em;text-transform:uppercase;color:var(--gray);}
+
+  /* ===== CONTACT ===== */
+  .contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--line);border:1px solid var(--line);}
+  .contact-card{background:var(--bg);padding:44px;display:flex;flex-direction:column;justify-content:center;gap:14px;}
+  .contact-card .ico{
+    width:52px;height:52px;background:var(--orange);border-radius:50%;
+    display:flex;align-items:center;justify-content:center;margin-bottom:6px;
+  }
+  .contact-card .ico svg{width:24px;height:24px;stroke:#0a0a0c;}
+  .contact-card .mono{color:var(--gray);font-size:12px;}
+  .contact-card .big{font-family:'Archivo Black',sans-serif;font-size:clamp(22px,2.6vw,30px);}
+  .contact-card .addr{color:var(--gray);font-size:15px;line-height:1.5;}
+
+  /* ===== CTA BAND ===== */
+  .cta-band{
+    text-align:center;padding:90px 32px;border-bottom:1px solid var(--line);
+    background:linear-gradient(180deg, var(--bg) 0%, var(--bg-alt) 100%);
+  }
+  .cta-band h2{font-size:clamp(30px,5vw,54px);}
+  .cta-band h2 .accent{color:var(--orange);}
+  .cta-band .btn-primary{margin-top:32px;}
+
+  /* ===== FOOTER ===== */
+  footer{padding:44px 0;}
+  .foot-wrap{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px;}
+  .foot-wrap .mono{color:var(--gray);font-size:12px;}
+  .foot-links{display:flex;gap:24px;}
+  .foot-links a{color:var(--gray);font-size:12px;font-family:'JetBrains Mono',monospace;transition:color 0.2s;}
+  .foot-links a:hover{color:var(--orange);}
+
+  /* ===== WHATSAPP FLOAT ===== */
+  .wa-float{
+    position:fixed;bottom:26px;right:26px;z-index:200;
+    width:58px;height:58px;background:#25d366;border-radius:50%;
+    display:flex;align-items:center;justify-content:center;
+    box-shadow:0 6px 20px rgba(0,0,0,0.4);transition:transform 0.2s;
+  }
+  .wa-float:hover{transform:scale(1.08);}
+  .wa-float svg{width:28px;height:28px;fill:#fff;}
+
+  /* ===== RESPONSIVE ===== */
+  @media (max-width:900px){
+    .hero-grid{grid-template-columns:1fr;}
+    .hero-visual{height:280px;order:-1;}
+    .svc-grid{grid-template-columns:repeat(2,1fr);}
+    .video-feature{grid-template-columns:1fr;}
+    .why-strip{grid-template-columns:repeat(3,1fr);}
+    .why-item{border-bottom:1px solid var(--line);}
+    .contact-grid{grid-template-columns:1fr;}
+    .nav-links{display:none;}
+    .burger{display:block;}
+  }
+  @media (max-width:560px){
+    .svc-grid{grid-template-columns:1fr;}
+    .why-strip{grid-template-columns:repeat(2,1fr);}
+    .section{padding:70px 0;}
+    .hero{padding:70px 0 60px;}
+    nav{padding:16px 20px;}
+    .wrap{padding:0 20px;}
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    .chart-line,.chart-fill,.chart-dot,.stat-callout{animation:none !important;opacity:1 !important;stroke-dashoffset:0 !important;}
+  }
+</style>
+</head>
+<body>
+<div class="grain"></div>
+
+<header>
+  <nav>
+    <div class="logo">
+      <div class="logo-mark">
+        <svg viewBox="0 0 100 100" fill="none">
+          <path d="M18 30 L18 30 Q18 20 30 20 L55 20 L30 45 L60 45 Q72 45 72 55 Q72 65 60 65 L35 65" stroke="#f5f5f2" stroke-width="9" stroke-linecap="round" fill="none"/>
+          <path d="M40 78 L85 30 M85 30 L65 30 M85 30 L85 50" stroke="#ff7a1a" stroke-width="9" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+        </svg>
+      </div>
+      <div class="logo-text">STEP<span>NEXT</span></div>
+    </div>
+    <div class="nav-links">
+      <a href="#services">Services</a>
+      <a href="#video">Video Creation</a>
+      <a href="#why">Why Us</a>
+      <a href="#contact">Contact</a>
+    </div>
+    <a href="tel:7869584966" class="nav-cta">Call Now</a>
+    <button class="burger">☰</button>
+  </nav>
+</header>
+
+<section class="hero">
+  <div class="wrap hero-grid">
+    <div>
+      <div class="eyebrow">Digital Marketing &middot; Branding &middot; Growth Solutions</div>
+      <h1>We build<br><span class="accent">brands</span> that grow.</h1>
+      <p class="sub">Bhopal-based growth partner for ambitious businesses — strategy, creativity and performance marketing under one roof, built to turn attention into revenue.</p>
+      <div class="hero-ctas">
+        <a href="tel:7869584966" class="btn-primary">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#0a0a0c" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+          Call / WhatsApp
+        </a>
+        <a href="#services" class="btn-ghost">View Services</a>
+      </div>
+      <div class="pillars">
+        <div class="pillar"><svg viewBox="0 0 24 24" fill="none" stroke-width="2"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="4"/></svg>Strategy</div>
+        <div class="pillar"><svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M12 2l2.5 6.5L21 11l-6.5 2.5L12 20l-2.5-6.5L3 11l6.5-2.5z"/></svg>Creativity</div>
+        <div class="pillar"><svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M3 20 L9 12 L14 16 L21 6"/></svg>Performance</div>
+        <div class="pillar"><svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M8 21h8M12 17v4M17 4H7v4a5 5 0 0010 0V4z"/></svg>Results</div>
+      </div>
+    </div>
+
+    <div class="hero-visual">
+      <svg class="chart-svg" viewBox="0 0 420 380" preserveAspectRatio="xMidYMid meet">
+        <path class="chart-fill" d="M10 320 L90 260 L170 290 L250 180 L330 120 L400 40 L400 360 L10 360 Z" fill="url(#grad)"/>
+        <defs>
+          <linearGradient id="grad" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#ff7a1a" stop-opacity="0.35"/>
+            <stop offset="100%" stop-color="#ff7a1a" stop-opacity="0"/>
+          </linearGradient>
+        </defs>
+        <path class="chart-line" d="M10 320 L90 260 L170 290 L250 180 L330 120 L400 40" />
+        <circle class="chart-dot d1" cx="170" cy="290" r="5"/>
+        <circle class="chart-dot d2" cx="250" cy="180" r="5"/>
+        <circle class="chart-dot d3" cx="400" cy="40" r="6"/>
+      </svg>
+      <div class="chart-label" style="bottom:6px;left:6px;">Q1</div>
+      <div class="chart-label" style="bottom:6px;right:10px;">Q4</div>
+      <div class="stat-callout">
+        <div class="num">3.4x</div>
+        <div class="lbl">Avg. ROI Growth</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="services">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="eyebrow">Our Services</div>
+      <h2>Everything your brand needs to grow.</h2>
+      <p>From strategy to execution — 13 services built to work together, not in silos.</p>
+    </div>
+  </div>
+  <div class="wrap" style="padding:0;max-width:1180px;">
+    <div class="svc-grid">
+
+      <div class="svc-card"><span class="svc-num">01</span>
+        <div class="svc-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 11l18-5v12L3 14v-3z"/><path d="M7 14v5a2 2 0 002 2h1"/></svg></div>
+        <h3>Digital Marketing</h3><p>End-to-end digital marketing solutions to grow your brand and increase ROI.</p>
+      </div>
+
+      <div class="svc-card"><span class="svc-num">02</span>
+        <div class="svc-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg></div>
+        <h3>Social Media Management</h3><p>We manage your social presence and build a strong connection with your audience.</p>
+      </div>
+
+      <div class="svc-card"><span class="svc-num">03</span>
+        <div class="svc-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M12 8v4l3 2"/></svg></div>
+        <h3>Google Ads</h3><p>Targeted Google Ads campaigns that drive quality leads and boost sales.</p>
+      </div>
+
+      <div class="svc-card"><span class="svc-num">04</span>
+        <div class="svc-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="4" y="4" width="16" height="16" rx="3"/><path d="M8 8h8M8 12h8M8 16h5"/></svg></div>
+        <h3>Meta Ads</h3><p>High-performing Facebook &amp; Instagram ad campaigns that deliver real results.</p>
+      </div>
+
+      <div class="svc-card"><span class="svc-num">05</span>
+        <div class="svc-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 19l7-7 3 3-7 7-3-3z"/><path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"/></svg></div>
+        <h3>Branding</h3><p>We create strong brands that stand out and leave a lasting impact.</p>
+      </div>
+
+      <div class="svc-card"><span class="svc-num">06</span>
+        <div class="svc-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="4" width="20" height="14" rx="2"/><path d="M8 21h8M12 18v3"/></svg></div>
+        <h3>Website Development</h3><p>Modern, responsive &amp; SEO-friendly websites that convert visitors into customers.</p>
+      </div>
+
+      <div class="svc-card"><span class="svc-num">07</span>
+        <div class="svc-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg></div>
+        <h3>SEO</h3><p>Improve your website ranking and get found by the right audience on Google.</p>
+      </div>
+
+      <div class="svc-card"><span class="svc-num">08</span>
+        <div class="svc-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 19l7-7 3 3-7 7-3-3z"/><path d="M2 2l7.586 7.586"/><circle cx="11" cy="11" r="2"/></svg></div>
+        <h3>Graphic Designing</h3><p>Creative designs that communicate your brand message perfectly.</p>
+      </div>
+
+      <div class="svc-card"><span class="svc-num">09</span>
+        <div class="svc-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2"/></svg></div>
+        <h3>Video Editing</h3><p>Professional video editing that makes your content engaging and impactful.</p>
+      </div>
+
+      <div class="svc-card"><span class="svc-num">10</span>
+        <div class="svc-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><polygon points="10 8 16 12 10 16 10 8"/></svg></div>
+        <h3>Content Creation</h3><p>High-quality content that attracts, engages and converts your audience.</p>
+      </div>
+
+      <div class="svc-card"><span class="svc-num">11</span>
+        <div class="svc-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg></div>
+        <h3>Lead Generation</h3><p>Generate quality leads that turn into loyal customers.</p>
+      </div>
+
+      <div class="svc-card"><span class="svc-num">12</span>
+        <div class="svc-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 3v18h18"/><path d="M7 15l4-4 3 3 5-6"/></svg></div>
+        <h3>Performance Marketing</h3><p>Data-driven marketing strategies for maximum growth and ROI.</p>
+      </div>
+
+      <div class="svc-card"><span class="svc-num">13</span>
+        <div class="svc-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 11.5a8.38 8.38 0 01-.9 3.8 8.5 8.5 0 01-7.6 4.7 8.38 8.38 0 01-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 01-.9-3.8 8.5 8.5 0 014.7-7.6 8.38 8.38 0 013.8-.9h.5a8.48 8.48 0 018 8v.5z"/></svg></div>
+        <h3>WhatsApp Marketing</h3><p>Reach your audience directly on WhatsApp and increase engagement &amp; conversions.</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<section class="section" id="video">
+  <div class="wrap">
+    <div class="video-feature">
+      <div class="video-copy">
+        <div class="eyebrow">Professional Video Creation</div>
+        <h3>Brand videos with real models — for ads, reels &amp; promotions.</h3>
+        <p>We produce high-quality promotional videos with professional models, built for YouTube, reels, and paid ad placements — scripted, shot and edited in-house.</p>
+        <a href="tel:7869584966" class="btn-primary" style="width:fit-content;">Book a Shoot</a>
+      </div>
+      <div class="video-thumb">
+        <div class="play-btn">
+          <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="why">
+  <div class="wrap" style="padding-top:70px;">
+    <div class="section-head" style="margin-bottom:0;">
+      <div class="eyebrow">Why StepNext</div>
+      <h2>How we work.</h2>
+    </div>
+  </div>
+  <div class="why-strip" style="margin-top:44px;">
+    <div class="why-item"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="4"/></svg><p>Strategy Driven</p></div>
+    <div class="why-item"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M12 2l2.5 6.5L21 11l-6.5 2.5L12 20l-2.5-6.5L3 11l6.5-2.5z"/></svg><p>Creative Designs</p></div>
+    <div class="why-item"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M3 20 L9 12 L14 16 L21 6"/></svg><p>Result Focused</p></div>
+    <div class="why-item"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M20.59 13.41L11 3.83V3h-.83L1 12.17 12.17 23z"/><circle cx="6.5" cy="6.5" r="1.5"/></svg><p>Affordable Packages</p></div>
+    <div class="why-item"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg><p>On-Time Delivery</p></div>
+    <div class="why-item"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M3 18v-6a9 9 0 0118 0v6"/><path d="M21 19a2 2 0 01-2 2h-1v-8h3z"/><path d="M3 19a2 2 0 002 2h1v-8H3z"/></svg><p>24/7 Support</p></div>
+  </div>
+</section>
+
+<section class="section" id="contact" style="padding-top:70px;">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="eyebrow">Get In Touch</div>
+      <h2>Let's grow your brand.</h2>
+    </div>
+  </div>
+  <div class="wrap" style="padding:0;max-width:1180px;">
+    <div class="contact-grid">
+      <a href="tel:7869584966" class="contact-card">
+        <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="#0a0a0c" stroke-width="2"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6A19.79 19.79 0 011.12 4.18 2 2 0 013.11 2h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L7.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z"/></svg></div>
+        <div class="mono">Call / WhatsApp</div>
+        <div class="big">78695 84966</div>
+      </a>
+      <a href="https://maps.google.com/?q=Sagar+High+Street+Ayodhya+Bypass+Bhopal" target="_blank" class="contact-card">
+        <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="#0a0a0c" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg></div>
+        <div class="mono">Visit Us</div>
+        <div class="addr">Sagar High Street,<br>Ayodhya Bypass, Bhopal</div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<div class="cta-band">
+  <h2>Your growth,<br><span class="accent">our strategy.</span></h2>
+  <a href="tel:7869584966" class="btn-primary">Start Your Project</a>
+</div>
+
+<footer>
+  <div class="wrap foot-wrap">
+    <div class="mono">© 2026 StepNext Media, Bhopal</div>
+    <div class="foot-links">
+      <a href="#services">Services</a>
+      <a href="#video">Video</a>
+      <a href="#contact">Contact</a>
+    </div>
+  </div>
+</footer>
+
+<a href="https://wa.me/917869584966" target="_blank" class="wa-float" aria-label="WhatsApp us">
+  <svg viewBox="0 0 24 24"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.87.5 3.63 1.44 5.15L2 22l5.09-1.53a9.87 9.87 0 004.95 1.33h.01c5.46 0 9.9-4.45 9.9-9.91 0-2.64-1.03-5.13-2.9-7C17.18 3.04 14.68 2 12.04 2zm0 18.06h-.01a8.15 8.15 0 01-4.15-1.14l-.3-.18-3.02.91.9-2.94-.19-.31a8.15 8.15 0 01-1.25-4.5c0-4.51 3.68-8.18 8.2-8.18 2.19 0 4.24.85 5.79 2.4a8.13 8.13 0 012.4 5.79c0 4.51-3.68 8.15-8.37 8.15zm4.47-6.1c-.24-.12-1.43-.7-1.65-.79-.22-.08-.38-.12-.55.12-.16.24-.63.79-.77.95-.14.16-.28.18-.52.06-.24-.12-1.01-.37-1.93-1.19a7.24 7.24 0 01-1.33-1.66c-.14-.24-.01-.37.11-.49.11-.11.24-.28.36-.42.12-.14.16-.24.24-.4.08-.16.04-.3-.02-.42-.06-.12-.55-1.33-.76-1.82-.2-.48-.4-.42-.55-.42h-.47c-.16 0-.42.06-.64.3-.22.24-.84.82-.84 2s.86 2.32.98 2.48c.12.16 1.69 2.58 4.1 3.62.57.25 1.02.4 1.37.51.58.18 1.1.16 1.51.1.46-.07 1.43-.58 1.63-1.15.2-.56.2-1.04.14-1.15-.06-.1-.22-.16-.46-.28z"/></svg>
+</a>
+
+</body>
+</html>
